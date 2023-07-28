@@ -3,27 +3,17 @@ package com.example.omadachallengechenige.flickrimages
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -33,8 +23,8 @@ import com.example.omadachallengechenige.navigation.Screen
 import com.example.omadachallengechenige.ui.composables.ErrorCard
 import com.example.omadachallengechenige.ui.composables.GridAsyncImage
 import com.example.omadachallengechenige.ui.composables.GridProgressIndicator
+import com.example.omadachallengechenige.ui.composables.SearchTextField
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ImagesGrid(
     navController: NavController,
@@ -44,37 +34,8 @@ fun ImagesGrid(
 
     Scaffold(
         topBar = {
-
-            val keyboardController = LocalSoftwareKeyboardController.current
-
-            TextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                placeholder = { Text("Search Flickr") },
-                value = state.searchText,
-                onValueChange = { onEvent.invoke(SearchEvent.SearchChanged(it)) },
-                maxLines = 1,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.Words,
-                    imeAction = ImeAction.Search
-                ),
-                keyboardActions = KeyboardActions(
-                    onSearch = {
-                        keyboardController?.hide()
-                        onEvent.invoke(SearchEvent.Search)
-                    }
-                ), trailingIcon = {
-                    IconButton(onClick = {
-                        keyboardController?.hide()
-                        onEvent.invoke(SearchEvent.Search)
-                    }) {
-                        Icon(Icons.Filled.Search, "Search")
-                    }
-
-                })
+            SearchTextField(state = state, onEvent = onEvent)
         }) { padding ->
-
 
         LazyVerticalGrid(
             modifier = Modifier
@@ -86,7 +47,6 @@ fun ImagesGrid(
         ) {
             if (state.flickrPhotos.isNotEmpty()) {
 
-
                 items(state.flickrPhotos.size) { i ->
                     val item = state.flickrPhotos[i]
                     if (i >= state.flickrPhotos.size - 1 && !state.isLoading) {
@@ -95,10 +55,18 @@ fun ImagesGrid(
 
                     GridAsyncImage(photoUrl = item.photoUrl) {
                         onEvent.invoke(SearchEvent.SelectedPhoto(i))
-                        navController.navigate(Screen.DetailScreen.withArgs("test")) }
-
+                        navController.navigate(Screen.DetailScreen.route)
+                    }
                 }
-
+            } else {
+                if (!state.isLoading) {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Text(
+                            "No photos have been found.", textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 32.dp)
+                        )
+                    }
+                }
             }
 
             if (state.isLoading) {
@@ -115,6 +83,8 @@ fun ImagesGrid(
         }
     }
 }
+
+
 
 sealed class SearchEvent {
     class SearchChanged(var query: String) : SearchEvent()

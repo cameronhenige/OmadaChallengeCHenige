@@ -13,11 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.compose.AppTheme
 import com.example.omadachallengechenige.flickrimages.FullScreenPhotoScreen
 import com.example.omadachallengechenige.flickrimages.ImagesGrid
@@ -33,9 +31,8 @@ class MainActivity : ComponentActivity() {
 
     private val pushNotificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        //viewModel.inputs.onTurnOnNotificationsClicked(granted)
-    }
+    ) { _ -> }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -50,56 +47,30 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    //ImagesGrid(state = imagesViewModel.imagesState, imagesViewModel::onSearchEvent)
-
-
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
                         startDestination = Screen.MainScreen.route
                     ) {
                         composable(route = Screen.MainScreen.route) {
-                            Surface(
-                                modifier = Modifier.fillMaxSize(),
-                                color = MaterialTheme.colorScheme.background
-                            ) {
-                                ImagesGrid(
-                                    navController,
-                                    state = imagesViewModel.imagesState,
-                                    imagesViewModel::onSearchEvent
-                                )
-                            }
+                            ImagesGrid(
+                                navController,
+                                state = imagesViewModel.imagesState,
+                                imagesViewModel::onSearchEvent
+                            )
                         }
 
                         composable(
-                            route = Screen.DetailScreen.route + "/{photoUrl}",
-                            arguments = listOf(
-                                navArgument("photoUrl") {
-                                    type = NavType.StringType
-                                    nullable = true
-                                })
-                        ) { entry ->
-                            Surface(
-                                modifier = Modifier.fillMaxSize(),
-                                color = MaterialTheme.colorScheme.background
-                            ) {
-                                FullScreenPhotoScreen(
-                                    navController,
-                                    state = imagesViewModel.imagesState
-                                )
-                            }
+                            route = Screen.DetailScreen.route
+                        ) {
+                            FullScreenPhotoScreen(
+                                navController,
+                                state = imagesViewModel.imagesState
+                            )
                         }
                     }
                 }
             }
-//            AppTheme {
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colorScheme.background
-//                ) {
-//                    ImagesGrid(state = imagesViewModel.imagesState, imagesViewModel::onSearchEvent)
-//                }
-//            }
         }
     }
 }

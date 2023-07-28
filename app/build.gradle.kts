@@ -90,7 +90,6 @@ dependencies {
     debugImplementation("androidx.fragment:fragment-testing:1.6.1")
     testImplementation("com.google.dagger:hilt-android-testing:2.44.2")
     kaptTest("com.google.dagger:hilt-android-compiler:2.46.1")
-
     testImplementation("androidx.test.espresso:espresso-core:3.5.1")
     testImplementation("androidx.test:runner:1.5.2")
     testImplementation("androidx.test:rules:1.5.0")

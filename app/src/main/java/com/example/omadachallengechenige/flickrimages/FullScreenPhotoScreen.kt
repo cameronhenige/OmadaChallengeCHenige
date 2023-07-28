@@ -36,6 +36,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.compose.AppTheme
 import com.example.omadachallengechenige.R
 import com.example.omadachallengechenige.ui.util.debugPlaceholder
 
@@ -123,11 +124,13 @@ fun FullScreenPhotoScreen(navController: NavHostController, state: ImagesScreenS
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun FullScreenPhotoScreenPreview() {
-    FullScreenPhotoScreen(
-        rememberNavController(),
-        ImagesScreenState(
-            flickrPhotos = listOf(Photo("Title", "url")),
-            selectedPhoto = 0
+    AppTheme {
+        FullScreenPhotoScreen(
+            rememberNavController(),
+            ImagesScreenState(
+                flickrPhotos = listOf(Photo("Title", "url")),
+                selectedPhoto = 0
+            )
         )
-    )
+    }
 }
