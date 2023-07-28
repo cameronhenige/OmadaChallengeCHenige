@@ -2,17 +2,26 @@
 
 This project is an Android application that lets users search for images. The main screen of the app will let you search for images from the Flickr API. It uses a custom implementation of Paging that allows more items to be requested as you search. When you tap on an image, you are taken to a second screen that let's you scroll horizontally to view images.
 
-This project is built using the following technologies.
+##This project is built using the following technologies.
 
 Jetpack Compose
+
 Compose Navigation
+
 MVVM
+
 Kotlin
+
 Dagger Hilt
+
 Material 3 - Light and Dark
+
 Chucker - https://github.com/ChuckerTeam/chucker
+
 Retrofit
+
 Coroutines
+
 Coil
 
 ![light](https://github.com/cameronhenige/OmadaChallengeCHenige/assets/10343448/39de02e5-8d61-4e73-94ce-b2dd58145c3f)
