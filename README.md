@@ -2,7 +2,7 @@
 
 This project is an Android application that lets users search for images. The main screen of the app will let you search for images from the Flickr API. It uses a custom implementation of Paging that allows more items to be requested as you search. When you tap on an image, you are taken to a second screen that let's you scroll horizontally to view images.
 
-##This project is built using the following technologies.
+## This project is built using the following technologies.
 
 Jetpack Compose
 
