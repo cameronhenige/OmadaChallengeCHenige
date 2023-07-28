@@ -9,7 +9,7 @@ Compose Navigation
 MVVM
 Kotlin
 Dagger Hilt
-Material 3 - Light/Dark
+Material 3 - Light and Dark
 Chucker - https://github.com/ChuckerTeam/chucker
 Retrofit
 Coroutines
