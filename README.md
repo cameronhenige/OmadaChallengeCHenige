@@ -24,7 +24,7 @@ Coroutines
 
 Coil
 
-## Screenshots.
+## Screenshots..
 
 ![light](https://github.com/cameronhenige/OmadaChallengeCHenige/assets/10343448/39de02e5-8d61-4e73-94ce-b2dd58145c3f)
 
